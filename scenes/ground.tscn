@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5e2nldj07hj7"]
+
+[ext_resource type="Script" path="res://scripts/generateGround.gd" id="1_kbs8c"]
+
+[node name="Ground" type="MeshInstance3D"]
+gi_mode = 0
+script = ExtResource("1_kbs8c")

@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://tc4tgi8fn1ol"]
+
+[ext_resource type="PackedScene" uid="uid://cb2tvp8bpw2ku" path="res://scenes/agent.tscn" id="1_tm2l5"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="2_7ar2h"]
+[ext_resource type="Resource" path="res://terrain/data.hterrain" id="3_o1r71"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="4_kprau"]
+
+[sub_resource type="Resource" id="Resource_txabv"]
+script = ExtResource("4_kprau")
+mode = 0
+textures = [[], []]
+
+[node name="Environment" type="Node3D"]
+
+[node name="Agent" parent="." instance=ExtResource("1_tm2l5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.8247, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Agent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.654249, 19.8234)
+
+[node name="HTerrain" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -125, 0, -125)
+script = ExtResource("2_7ar2h")
+map_scale = Vector3(0.5, 0.5, 0.5)
+_terrain_data = ExtResource("3_o1r71")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_txabv")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale = 20
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = null
+shader_params/u_tile_reduction = null

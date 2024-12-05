@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://csm3f2rescv3y"]
+
+[ext_resource type="Shader" path="res://shaders/flame.gdshader" id="1_r1jjk"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pqgvq"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ho22r"]
+seamless = true
+seamless_blend_skirt = 0.0
+noise = SubResource("FastNoiseLite_pqgvq")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_r1jjk")
+shader_parameter/root_color = Color(1, 0.845422, 0.382289, 1)
+shader_parameter/tip_color = Color(1, 0.526109, 0.458759, 1)
+shader_parameter/fire_alpha = 1.0
+shader_parameter/fire_speed = Vector2(0, 3)
+shader_parameter/fire_aperture = 0.094
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_ho22r")

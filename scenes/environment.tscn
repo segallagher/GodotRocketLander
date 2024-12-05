@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://tc4tgi8fn1ol"]
+
+[ext_resource type="PackedScene" uid="uid://cb2tvp8bpw2ku" path="res://scenes/agent.tscn" id="1_tm2l5"]
+[ext_resource type="PackedScene" uid="uid://c5e2nldj07hj7" path="res://scenes/ground.tscn" id="2_716fb"]
+[ext_resource type="Shader" path="res://shaders/wireframe.gdshader" id="3_r2wrm"]
+[ext_resource type="Script" path="res://scripts/debugObject.gd" id="3_rficn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l5bs8"]
+render_priority = 0
+shader = ExtResource("3_r2wrm")
+shader_parameter/modelColor = Color(1, 0, 0, 0)
+shader_parameter/wireframeColor = Color(0, 0, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/modelOpacity = 0.0
+shader_parameter/filtered = false
+
+[sub_resource type="SphereMesh" id="SphereMesh_2t5hb"]
+material = SubResource("ShaderMaterial_l5bs8")
+
+[node name="Environment" type="Node3D"]
+
+[node name="Agent" parent="." instance=ExtResource("1_tm2l5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.825, 0)
+mass = 100.0
+
+[node name="Ground" parent="." instance=ExtResource("2_716fb")]
+
+[node name="Target" type="Node3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+visible = false
+script = ExtResource("3_rficn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Target"]
+mesh = SubResource("SphereMesh_2t5hb")

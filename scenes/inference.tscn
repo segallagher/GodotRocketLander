@@ -1,0 +1,66 @@
+[gd_scene load_steps=13 format=3 uid="uid://bgpyym6e2wn7n"]
+
+[ext_resource type="PackedScene" uid="uid://cb2tvp8bpw2ku" path="res://scenes/agent.tscn" id="1_llgyf"]
+[ext_resource type="Script" path="res://scripts/generateGround.gd" id="2_00ga7"]
+[ext_resource type="Script" path="res://scripts/debugObject.gd" id="3_kg0na"]
+[ext_resource type="Shader" path="res://shaders/wireframe.gdshader" id="4_7rjqb"]
+[ext_resource type="Script" path="res://scenes/camera_controls.gd" id="5_i53bv"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="6_oq257"]
+[ext_resource type="Texture2D" uid="uid://cfeq3aclc3gff" path="res://textures/2k_stars.jpg" id="7_3wx3j"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l5bs8"]
+render_priority = 0
+shader = ExtResource("4_7rjqb")
+shader_parameter/modelColor = Color(1, 0, 0, 0)
+shader_parameter/wireframeColor = Color(0, 0, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/modelOpacity = 0.0
+shader_parameter/filtered = false
+
+[sub_resource type="SphereMesh" id="SphereMesh_2t5hb"]
+material = SubResource("ShaderMaterial_l5bs8")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_i0uuv"]
+panorama = ExtResource("7_3wx3j")
+
+[sub_resource type="Sky" id="Sky_i6gfr"]
+sky_material = SubResource("PanoramaSkyMaterial_i0uuv")
+
+[sub_resource type="Environment" id="Environment_20xb1"]
+background_mode = 2
+sky = SubResource("Sky_i6gfr")
+
+[node name="Environment" type="Node3D"]
+
+[node name="Agent" parent="." instance=ExtResource("1_llgyf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.825, 0)
+mass = 100.0
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+gi_mode = 0
+script = ExtResource("2_00ga7")
+
+[node name="Target" type="Node3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+visible = false
+script = ExtResource("3_kg0na")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Target"]
+mesh = SubResource("SphereMesh_2t5hb")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, 5.61944e-08, -6.69697e-08, 3.69465e-08, 0.965926, 0.25882, 7.9232e-08, 0.25882, -0.965926, 9.65184, 29.7462, -42.4203)
+current = true
+script = ExtResource("5_i53bv")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.8114, -0.584491, 5.51257e-08, 0.534129, 0.741487, 0.406083, -0.237352, -0.329496, 0.913836, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("6_oq257")
+control_mode = 2
+onnx_model_path = "landerRL_45M.onnx"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_20xb1")

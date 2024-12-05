@@ -1,0 +1,101 @@
+[gd_scene load_steps=10 format=3 uid="uid://cb2tvp8bpw2ku"]
+
+[ext_resource type="Script" path="res://scripts/agent.gd" id="1_v6dpk"]
+[ext_resource type="Material" uid="uid://7q81dim1k6vf" path="res://materials/rocket.tres" id="2_5d8sc"]
+[ext_resource type="ArrayMesh" uid="uid://4yi17qnlrei" path="res://meshes/RocketLander.obj" id="3_25afb"]
+[ext_resource type="Material" uid="uid://csm3f2rescv3y" path="res://materials/flame.tres" id="4_mtjye"]
+[ext_resource type="ArrayMesh" uid="uid://b2lr7ahrtwmnt" path="res://meshes/flame_V2.obj" id="4_vkgp5"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/controller/ai_controller_3d.gd" id="6_sllfv"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_u0xar"]
+height = 3.58624
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5gwhu"]
+radius = 0.382376
+height = 1.76299
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ibas4"]
+size = Vector3(0.21582, 0.0769196, 0.249634)
+
+[node name="RigidBody3D" type="RigidBody3D"]
+script = ExtResource("1_v6dpk")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+material_override = ExtResource("2_5d8sc")
+mesh = ExtResource("3_25afb")
+skeleton = NodePath("../..")
+
+[node name="ColliderBody" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0688226, 0)
+shape = SubResource("CylinderShape3D_u0xar")
+
+[node name="ColliderNose" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.00691, 0)
+shape = SubResource("CapsuleShape3D_5gwhu")
+
+[node name="ColliderFoot1" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0.538799, -1.99973, 0.541434)
+shape = SubResource("BoxShape3D_ibas4")
+
+[node name="ColliderFoot2" type="CollisionShape3D" parent="."]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -0.547873, -1.99973, 0.541434)
+shape = SubResource("BoxShape3D_ibas4")
+
+[node name="ColliderFoot3" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -0.545442, -1.99973, -0.547669)
+shape = SubResource("BoxShape3D_ibas4")
+
+[node name="ColliderFoot4" type="CollisionShape3D" parent="."]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0.546093, -1.99973, -0.545238)
+shape = SubResource("BoxShape3D_ibas4")
+
+[node name="thrust_main" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.667786, 0, 0, 0, 1, 0, 0, 0, 0.667786, 0, -1.64462, 0)
+material_override = ExtResource("4_mtjye")
+mesh = ExtResource("4_vkgp5")
+
+[node name="thrust_pitch_pos" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.131175, -2.77137e-08, -5.01269e-16, 0, -1.38568e-08, 0.131175, -1.14677e-08, 0.317007, 5.73385e-09, 3.49691e-08, 1.95288, -0.4)
+material_override = ExtResource("4_mtjye")
+mesh = ExtResource("4_vkgp5")
+
+[node name="thrust_pitch_neg" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.131175, 2.77137e-08, -5.01269e-16, 0, -1.38568e-08, -0.131175, -1.14677e-08, -0.317007, 5.73385e-09, -3.49691e-08, 1.953, 0.4)
+material_override = ExtResource("4_mtjye")
+mesh = ExtResource("4_vkgp5")
+
+[node name="thrust_yaw_pos" type="MeshInstance3D" parent="."]
+transform = Transform3D(-5.73385e-09, -0.317007, -5.73385e-09, 1.38887e-22, -1.38568e-08, 0.131175, -0.131175, 1.38568e-08, 7.16663e-16, 0.4, 1.95288, -1.74846e-08)
+material_override = ExtResource("4_mtjye")
+mesh = ExtResource("4_vkgp5")
+
+[node name="thrust_yaw_neg" type="MeshInstance3D" parent="."]
+transform = Transform3D(-5.73385e-09, 0.317007, -5.73385e-09, -1.38887e-22, -1.38568e-08, -0.131175, -0.131175, -1.38568e-08, 2.50635e-16, -0.4, 1.953, 1.74846e-08)
+material_override = ExtResource("4_mtjye")
+mesh = ExtResource("4_vkgp5")
+
+[node name="thrust_roll_pos1" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.131175, 5.96046e-08, 2.66454e-15, 3.29532e-16, -1.38568e-08, 0.131175, 1.49012e-08, 0.317007, 5.73385e-09, -0.282843, 1.95288, -0.282843)
+material_override = ExtResource("4_mtjye")
+mesh = ExtResource("4_vkgp5")
+
+[node name="thrust_roll_pos2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.131175, -5.96046e-08, 1.77636e-15, -3.29532e-16, -1.38568e-08, -0.131175, 1.49012e-08, -0.317007, 5.73385e-09, 0.282843, 1.953, 0.282843)
+material_override = ExtResource("4_mtjye")
+mesh = ExtResource("4_vkgp5")
+
+[node name="thrust_roll_neg1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.131, -6.37236e-08, -1.15108e-15, 0, -1.38565e-08, 0.131, -2.63337e-08, -0.317, -5.72619e-09, -0.282843, 1.95288, 0.282843)
+material_override = ExtResource("4_mtjye")
+mesh = ExtResource("4_vkgp5")
+
+[node name="thrust_roll_neg2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.131175, 0, 0, 0, -1.38568e-08, -0.131175, 0, 0.317007, -5.73384e-09, 0.282843, 1.953, -0.282843)
+material_override = ExtResource("4_mtjye")
+mesh = ExtResource("4_vkgp5")
+
+[node name="AIController3D" type="Node3D" parent="."]
+script = ExtResource("6_sllfv")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
