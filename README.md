@@ -15,3 +15,5 @@ This libary provided this following functionaly:
 You can find out more about Godot RL agents in our AAAI-2022 Workshop [paper](https://arxiv.org/abs/2112.03636).
 
 # GodotRocketLander
+
+Rocket lander training using the Godot RL Agents plugin
